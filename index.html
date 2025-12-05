@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    @font-face {
+      font-family: 'JapanTitle';
+      src: url('fonts/fuente.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      margin:0; padding:0;
+      font-family: system-ui, sans-serif;
+      background: url('fondo.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    /* título estilo anime */
+    .title {
+      text-align:center;
+      color: #ff69b4;  /* rosa chicle */
+      font-family: 'JapanTitle', system-ui, sans-serif;
+      font-size: clamp(32px, 9vw, 72px);
+      text-decoration: underline;
+      margin-top: 50px;   /* antes 20px, ahora más espacio desde arriba */
+      margin-bottom: 15px;
+      text-shadow: 0 4px 8px rgba(0,0,0,0.6);
+    }
+
+
+    .bingo {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 5px;
+      width: 95%;
+      max-width: 700px;
+      margin: 10px auto 30px auto;
+      border: 3px solid #ff69b4;  /* rosa chicle */
+      padding: 8px;
+      background: rgba(255,255,255,0.2);
+    }
+
+
+    .cell {
+      padding: 18px 6px;
+      background: rgba(255,255,255,0.9);
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      border: 2px solid #000;   /* se queda negro */
+      font-weight: bold;
+      color: #000;
+      font-size: clamp(12px, 3.2vw, 18px);
+      word-wrap: break-word;
+    }
+
+
+    /* secciones */
+    .board-section {
+      margin-bottom: 50px;
+    }
+
+    /* más separación entre el primer y segundo bingo */
+    .board-section + .board-section {
+      margin-top: 40px;
+    }
+
+    .board-section h2 {
+      text-align: center;
+      color: #ff69b4;              /* rosa chicle */
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+      font-size: clamp(24px, 4.5vw, 40px); /* aprox mitad del título principal */
+      margin-top: 20px;
+      margin-bottom: 15px;
+      text-decoration: underline;  /* subrayado */
+    }
+
+
+    /* barra superior */
+    .top-bar {
+      display:flex;
+      justify-content: flex-end;
+      align-items:center;
+      gap:10px;
+      padding: 5px 12px;
+      color:#fff;
+      font-size: 16px;  /* subimos tamaño base */
+    }
+
+    /* botones genéricos */
+    .btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 2px solid #ff69b4;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      background-color: #ff69b4;  /* rosa chicle */
+      color: #ffffff;
+    }
+
+    .btn:hover {
+      filter: brightness(1.1);
+    }
+
+    .btn-danger {
+      background:#c0392b;
+      border-color:#c0392b;
+      color:#fff;
+    }
+
+    .board-actions {
+      display:flex;
+      justify-content: center;
+      gap:10px;
+      margin-bottom: 30px;
+    }
+
+    .personal-header {
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .personal-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      width: 95%;
+      max-width: 700px;    /* igual que el bingo */
+      margin: 0 auto 5px auto;
+    }
+
+    /* el h2 dentro mantiene el estilo chicle que ya tenías */
+    .personal-header-row h2 {
+      text-align: left;
+      color: #ff69b4;      /* rosa chicle */
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+      font-size: clamp(24px, 4.5vw, 40px);
+      text-decoration: underline;
+      margin: 0;
+    }
+
+    /* marcador "Envidia" a la derecha, amarillo y con la fuente anime */
+    .score-label {
+      font-family: 'JapanTitle', system-ui, sans-serif;
+      font-size: 1.8em;         /* un poco más pequeño que el h2 */
+      color: #ffd800;           /* amarillo brillante */
+      text-decoration: underline;
+    }
+
+
+    /* mensaje de ganador */
+    .winner-msg {
+      text-align: center;
+      font-weight: 900;
+      font-size: clamp(20px, 4vw, 30px);
+      color: #ffd800;            /* amarillo brillante */
+      text-decoration: underline;
+      margin: 5px 0 15px 0;
+    }
+
+
+    #userInfo {
+      font-weight: 700;
+      font-size: 16px;
+      color: #ffd800;   /* amarillo brillante */
+    }
+
+
+    /* un pelín más grande aún en pantallas muy pequeñas */
+    @media (max-width: 480px) {
+      .btn {
+        font-size: 15px;
+        padding: 10px 16px;
+      }
+      .board-section h2 {
+        font-size: 1.5rem;
+      }
+      .cell {
+        padding: 20px 4px;
+        font-size: 14px;
+      }
+      #userInfo {
+        font-size: 17px;
+      }
+      .score-label {
+        font-size: 1.3em;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <h1 class="title">Bingo de Envidiosos</h1>
+
+  <div class="top-bar">
+    <span id="userInfo"></span>
+    <button id="logoutBtn" class="btn" style="display:none;">🚪 Cerrar sesión</button>
+  </div>
+
+  <section class="board-section">
+    <h2>Bingo general</h2>
+    <div id="bingo-global" class="bingo"></div>
+    <div class="board-actions">
+      <button id="undoGlobal" class="btn">⟲ Deshacer</button>
+      <button id="resetGlobal" class="btn btn-danger" style="display:none;">🧹 Limpiar bingo</button>
+    </div>
+  </section>
+
+  <section class="board-section">
+    <div class="personal-header-row">
+      <h2>Tu bingo personal</h2>
+      <span id="scoreLabel" class="score-label">Envidia: 0</span>
+    </div>
+    <div id="bingo-personal" class="bingo"></div>
+    <p id="winnerMsg" class="winner-msg"></p>
+    <div class="board-actions">
+      <button id="undoPersonal" class="btn">⟲ Deshacer</button>
+    </div>
+  </section>
+
+
+  <script type="module" src="app.js"></script>
+</body>
+
+</html>
