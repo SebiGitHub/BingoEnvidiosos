@@ -141,7 +141,7 @@ Cualquier pulsación de **Deshacer** hace que:
 
 - Se revierte la última acción del usuario (global o personal, según el botón).
 - El marcador se recalcula de nuevo con el estado actual (así los puntos suben o bajan correctamente).
-
+![WhatsApp Image 2026-01-15 at 11 50 48](https://github.com/user-attachments/assets/4983a2ee-ecc3-43fb-8635-7d15fe201562)
 ---
 
 ### 5. Gestión de sesión y cierre
