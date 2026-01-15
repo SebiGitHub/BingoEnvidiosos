@@ -189,7 +189,7 @@ Este proyecto está pensado para:
   - picaros sanamente,
   - y ver quién consigue más envidia.
 
-Al final, **Bingo de Envidiosos** es una excusa para:
+Al final, **Realtime-Collaborative-Bingo-Web-App** es una excusa para:
 
 - Observar lo que pasa alrededor,
 - Buscar cosas absurdas/divertidas,
