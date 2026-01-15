@@ -187,7 +187,7 @@ Este proyecto está pensado para:
 - **Quedadas de amigos** donde queráis:
   - tener retos visuales,
   - picaros sanamente,
-  - y ver quién “farmea” más envidia.
+  - y ver quién consigue más envidia.
 
 Al final, **Bingo de Envidiosos** es una excusa para:
 
